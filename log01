@@ -1,0 +1,11 @@
+Logging
+Logging can be defined as a process of writing the logs while the application is being executed. Typical logs include warnings, errors and any information.Logging plays a crucial role in trouble shooting of any application, debugging and its corresponding maintanence. Logs saves us valuable hours. It proves to be the fundamental part of any application.
+
+A well designed logging system makes the lives of the developers and support team easier. So it is very crucial to make the log file easily interpretable to extract the necessary information. 
+
+The size of the logger files grows exponentially for frequently used applications. This application enables us to derive the necessary logs for fixing the bugs and easy maintenance of the application. It enables the user to track the bugs if any and work on it. The developer will be able to  search for a particular or generalized event or information and will be able to gain meaningful insights from it.
+
+	
+
+
+
