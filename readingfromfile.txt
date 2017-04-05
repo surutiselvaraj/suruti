@@ -1,0 +1,174 @@
+Main:
+import java.io.*;
+import java.util.*;
+public class Main {
+public static void main(String args[]) throws IOException
+{
+    Scanner d=new Scanner(System.in);
+	TreeSet<CallLog> ls=new TreeSet<CallLog>(new MyComparator());
+	
+	File f=new File("calllog.txt");
+	FileReader fr=new FileReader(f);
+	BufferedReader bf=new BufferedReader(fr);
+	FileReader fr1=new FileReader(f);
+	BufferedReader bf1=new BufferedReader(fr1);
+	String s;
+	while((s=bf.readLine())!=null)
+	{
+		String[] a=s.split(",");
+		//String[] q=a[3].split(":");
+		//String b=a[2]+" "+a[3];
+		//String c=a[4]+" "+a[5];
+		ls.add(new CallLog(a[0],a[1],a[2],a[3]));
+	}
+	
+	int a=0;
+	do
+	{
+		System.out.println("1)Call Log 2)Call Details 3)Exit");
+		System.out.println("Enter your choice");
+		a=d.nextInt();
+		switch(a)
+		{
+		case 1:
+			System.out.println("Contact Name         Contact Number       Call Starts          Call Ends           ");
+			for(CallLog a1:ls)
+			{
+				System.out.printf("%-20s %-20s %-20s %-20s\n",a1.getContactName(),a1.getPhoneNumber(),a1.getStartTime(),a1.getEndTime());
+				
+			}
+			break;
+		case 2:
+			Map<String,Integer> m=new HashMap<String,Integer>();
+			int q=0;
+			String t;
+			System.out.println("Contact Name         Contact Number    ");
+			//System.out.println("hi");
+			while((t=bf1.readLine())!=null)
+			{
+				//System.out.println("hi");
+				String[] h=t.split(",|\\s+");
+				if(m.containsKey(h[1]))
+				{
+					q=m.get(h[1]);
+					q++;
+					m.put(h[1], q);
+				}
+				else
+				{
+					m.put(h[1], 1);
+				}
+				
+			}
+			for(CallLog al1:ls)
+			{
+				MyComparator z=new MyComparator(); 
+				System.out.printf("%-20s%s(%d)\n", al1.getContactName(),al1.getPhoneNumber(),m.get(al1.getPhoneNumber()));
+			}
+			
+						break;
+		default:
+		/*	int k=0,j=1;
+			String[] f1=new String[20];
+			Set<String> s1=new HashSet<String>();
+			Set<String> s2=new HashSet<String>();
+			while((t=bf1.readLine())!=null)
+			{
+				 String[] q1=t.split(",|\\s+");
+				 f1[k]=q1[1];
+				k++;	
+			}
+			//System.out.println(k);
+			int y1[]=new int[k];
+			int h=0;
+			for(int i=0;i<k;i++)
+			{
+				//System.out.println(f1[i]);
+				if(s1.contains(f1[i]))
+				{
+					//System.out.println(f1[i]);
+					s1.add(f1[i]);
+					j++;	
+					
+					continue;
+				}
+				s1.add(f1[i]);
+				System.out.printf("%d ",j);
+				j=1;
+				/*
+				y1[h]=j;
+				j=1;
+				h++;*/
+				
+			
+			//for(int i=0;i<h;i++)
+				//System.out.println(y1[i]);
+				//System.out.println(s1.size()+" "+s2.size());
+		System.exit(0);
+		}
+	}while(a<3);
+}
+}
+
+
+
+Comparator:
+
+import java.io.*;
+import java.util.*;
+class MyComparator implements Comparator<CallLog> {
+    
+      public int compare(CallLog a, CallLog b) {
+	    String aStr, bStr;
+	    aStr =a.getContactName() ;
+	    bStr = b.getContactName();
+	   
+	    return aStr.compareTo(bStr);
+	  }
+	  
+	  // No need to override equals.
+	}
+
+Call log:
+import java.text.*;
+
+
+public class CallLog {
+    private String phoneNumber,contactName,startTime,endTime;
+    DateFormat df1=new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+	DateFormat df2=new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+	public CallLog()
+	{
+		phoneNumber="";
+		contactName="";
+		startTime="";
+		endTime="";
+	}
+public CallLog(String a,String b,String c,String d)
+{
+	
+	this.contactName=a;
+this.phoneNumber=b;
+
+try {
+	this.startTime=df1.format(df1.parse(c));
+	this.endTime=df2.format(df2.parse(d));
+} catch (ParseException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+
+}
+public String getPhoneNumber() {
+	return phoneNumber;
+}
+public String getContactName() {
+	return contactName;
+}
+public String getStartTime() {
+	return startTime;
+}
+public String getEndTime() {
+	return endTime;
+}
+}
